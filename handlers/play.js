@@ -21,7 +21,8 @@ module.exports = ({ emit, client }) => {
       broadcast.playStream(stream)
 
       for (const connection of client.voiceConnections.values()) {
-        connection.playBroadcast(broadcast)
+        const dispatcher = connection.playBroadcast(broadcast)
+        dispatcher.setVolume(0.5)
       }
 
       broadcast.on('end', () => emit('play'))

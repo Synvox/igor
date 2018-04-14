@@ -1,5 +1,5 @@
 module.exports = {
-  next: require('./next'),
+  shuffle: require('./shuffle'),
   play: require('./play'),
   append: require('./append'),
   clear: require('./clear'),

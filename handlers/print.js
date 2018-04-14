@@ -6,15 +6,15 @@ module.exports = ({ say }) => {
       embed: {
         title: current.name || current,
         thumbnail: {
-          url: current.url
+          url: current.img
         },
         fields: [
           {
-            name: 'In Queue',
+            name: 'In Queue:',
             value: queue
               .map(
                 (item, index) =>
-                  `\`${`${index + 1}`.padStart(3)}. ${item.name || item}\``
+                  `\`${String(index + 1).padStart(3)}. ${item.name || item}\``
               )
               .join('\n')
               .substring(0, 1000)

@@ -18,7 +18,8 @@ module.exports = ({ emit, client }) => {
   return async ({ payload: message }) => {
     if (!message.content.match(/igor/i)) return
     if (message.content.match(/clear|kill/i)) return emit('clear')
-    if (message.content.match(/next|skip/i)) return emit('next')
+    if (message.content.match(/next|skip/i)) return emit('play')
+    if (message.content.match(/shuffle/i)) return emit('shuffle')
     if (!message.content.match(/play/i)) {
       message.channel.send({
         content: 'Yes master...',

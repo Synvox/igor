@@ -28,7 +28,9 @@ function start() {
     while (msg) {
       let { name, payload } = msg
 
-      await fns[name](payload)
+      // console.log('Running', name, payload, state)
+      if (!fns[name]) throw new Error(`Cannot run hook for ${name}`)
+      await fns[name](payload).catch(console.log)
 
       msg = messageStack.pop()
     }
