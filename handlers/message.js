@@ -20,6 +20,8 @@ module.exports = ({ emit, client }) => {
     if (message.content.match(/clear|kill/i)) return emit('clear')
     if (message.content.match(/next|skip/i)) return emit('play')
     if (message.content.match(/shuffle/i)) return emit('shuffle')
+    if (message.content.match(/pause|stop/i)) return emit('pause')
+    if (message.content.match(/resume|start/i)) return emit('resume')
     if (!message.content.match(/play/i)) {
       message.channel.send({
         content: 'Yes master...',

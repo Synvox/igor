@@ -4,5 +4,7 @@ module.exports = {
   append: require('./append'),
   clear: require('./clear'),
   message: require('./message'),
-  print: require('./print')
+  print: require('./print'),
+  pause: require('./pause'),
+  resume: require('./resume')
 }
