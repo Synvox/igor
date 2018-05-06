@@ -1,7 +1,6 @@
 module.exports = ({ emit }) => {
-  return async ({ state, payload, next }) => {
+  return async ({ payload, next }) => {
     next({
-      ...state,
       queue: payload
     })
 

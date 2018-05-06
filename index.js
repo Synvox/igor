@@ -4,7 +4,7 @@ const Discord = require('discord.js')
 const client = new Discord.Client()
 const handlers = require('./handlers')
 
-function start() {
+function start(message) {
   let channel = null
   let state = {
     current: null,
@@ -41,18 +41,16 @@ function start() {
     .map(([name, fn]) => [name, fn({ emit, client, say })])
     .map(([name, fn]) => [
       name,
-      async payload => await fn({ state, payload, next: s => (state = s) })
+      async payload => await fn({ state, payload, next: s => (state = Object.assign(state, s)) })
     ])
     .reduce((obj, [name, fn]) => Object.assign(obj, { [name]: fn }), {})
 
-  client.on('message', m => {
-    channel = m.channel
-    emit('message', m)
-  })
+  channel = message.channel
+  emit('message', message)
 }
 
 client.login(process.env.DISCORD_TOKEN).catch(console.log)
 
-// In the future we'll be able to pass a server in
-// so there can be multiple instances.
-start()
+client.on('message', m => {
+  start(m)
+})

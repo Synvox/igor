@@ -4,7 +4,6 @@ module.exports = ({ emit, client }) => {
   return async ({ state, next }) => {
     if (state.broadcast) {
       next({
-        ...state,
         current: null,
         broadcast: null
       })
@@ -25,11 +24,18 @@ module.exports = ({ emit, client }) => {
         dispatcher.setVolume(0.5)
       }
 
-      broadcast.on('end', () => emit('play'))
+      broadcast.on('end', () => {
+        setTimeout(() => {
+          next({
+            broadcast: null,
+            current: null
+          })
+          emit('play')
+        }, 200)
+      })
     }
 
     next({
-      ...state,
       broadcast,
       current,
       queue: state.queue.slice(1)

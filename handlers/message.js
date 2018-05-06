@@ -17,9 +17,9 @@ const search = async query => {
 module.exports = ({ emit, client }) => {
   return async ({ payload: message }) => {
     if (!message.content.match(/igor/i)) return
-    if (message.content.match(/clear|kill/i)) return emit('clear')
-    if (message.content.match(/next|skip/i)) return emit('play')
-    if (message.content.match(/shuffle/i)) return emit('shuffle')
+    if (message.content.match(/clear|kill|stop|done/i)) return emit('clear')
+    if (message.content.match(/next|skip|song sucks/i)) return emit('play')
+    if (message.content.match(/shuffle|mix/i)) return emit('shuffle')
     if (message.content.match(/pause|stop/i)) return emit('pause')
     if (message.content.match(/resume|start/i)) return emit('resume')
     if (!message.content.match(/play/i)) {
@@ -32,12 +32,24 @@ module.exports = ({ emit, client }) => {
               value: 'Search youtube or play a youtube url'
             },
             {
-              name: 'igor skip, igor next',
+              name: 'igor skip, igor next, igor this song sucks',
               value: 'Skips the current track'
             },
             {
-              name: 'igor kill, igor clear',
+              name: 'igor kill, igor clear, igor stop, igor done',
               value: 'Removes igor from the voice channel'
+            },
+            {
+              name: 'igor shuffle, igor mix',
+              value: 'Shuffles the tracks'
+            },
+            {
+              name: 'igor pause, igor stop',
+              value: 'Pauses the track'
+            },
+            {
+              name: 'igor resume, igor start',
+              value: 'Resumes the track'
             }
           ]
         }
