@@ -6,6 +6,7 @@ const search = async query => {
       query
     )}&maxResults=25&part=snippet&key=${process.env.YT_KEY}`
   )
+
   const { items } = data
   return items.filter(x => x.id.videoId).map(x => ({
     url: `https://www.youtube.com/watch?v=${x.id.videoId}`,
@@ -64,6 +65,7 @@ module.exports = ({ emit, client }) => {
         message.channel.send(
           'My master... I cannot connect to any voice channels. Join one first.'
         )
+        return
       }
     }
 

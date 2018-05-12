@@ -1,11 +1,11 @@
 module.exports = ({ client }) => {
-  return async ({ state, next }) => {
+  return async ({ next }) => {
     client.voiceConnections.forEach(x => {
       x.channel.leave()
     })
 
     next({
-      ...state,
+      voice: null,
       current: null,
       queue: []
     })

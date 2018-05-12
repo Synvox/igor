@@ -4,12 +4,15 @@ const Discord = require('discord.js')
 const client = new Discord.Client()
 const handlers = require('./handlers')
 
+let state = {
+  broadcast: null,
+  voiceHandler: null,
+  current: null,
+  queue: []
+}
+
 function start(message) {
   let channel = null
-  let state = {
-    current: null,
-    queue: []
-  }
 
   const messageStack = []
   let running = false
@@ -28,7 +31,6 @@ function start(message) {
     while (msg) {
       let { name, payload } = msg
 
-      // console.log('Running', name, payload, state)
       if (!fns[name]) throw new Error(`Cannot run hook for ${name}`)
       await fns[name](payload).catch(console.log)
 
@@ -41,7 +43,14 @@ function start(message) {
     .map(([name, fn]) => [name, fn({ emit, client, say })])
     .map(([name, fn]) => [
       name,
-      async payload => await fn({ state, payload, next: s => (state = Object.assign(state, s)) })
+      async payload =>
+        await fn({
+          state,
+          payload,
+          next: s => {
+            state = { ...state, ...s }
+          }
+        })
     ])
     .reduce((obj, [name, fn]) => Object.assign(obj, { [name]: fn }), {})
 

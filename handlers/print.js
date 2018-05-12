@@ -12,6 +12,7 @@ module.exports = ({ say }) => {
           {
             name: 'In Queue:',
             value: queue
+              .slice(0, Math.min(queue.length, 10))
               .map(
                 (item, index) =>
                   `\`${String(index + 1).padStart(3)}. ${item.name || item}\``
